@@ -36,13 +36,17 @@ history = model.fit(X_train, y_train, epochs=1000, validation_split=0.2, verbose
 y_pred = model.predict(X_test)
 y_pred = (y_pred > 0.5).astype(int)
 
-print(f'loss: {history.history["loss"][-1]}')
+print("=" * 32)
+print(f'Loss: {history.history["loss"][-1]}')
 loss=history.history['loss']
 plt.plot(loss)
 
 # Evaluate the model
+print("=" * 32)
 print('Accuracy:', accuracy_score(y_test, y_pred))
+print("=" * 32)
 print('Confusion Matrix:\n', confusion_matrix(y_test, y_pred))
+print("=" * 32)
 
 # Example features
 example_features = [1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0]
@@ -52,8 +56,9 @@ example_features_array = np.array(example_features).reshape(1, -1)
 
 # Predict the class (malicious or not) of the example URL
 prediction = model.predict(example_features_array)
-
+print(f"Prediction: {prediction}")
+print("=" * 32)
 if prediction > 0.5:
-    print("The example URL is predicted to be malicious.")
+    print("\n\n\nThe example URL is predicted to be malicious.")
 else:
-    print("The example URL is predicted to be non-malicious.")
+    print("\n\n\nThe example URL is predicted to be non-malicious.")
