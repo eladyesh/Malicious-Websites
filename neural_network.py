@@ -3,6 +3,7 @@ import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
+import matplotlib.pyplot as plt
 
 # Load the dataset
 url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/00327/Training%20Dataset.arff'
@@ -26,14 +27,18 @@ model = tf.keras.Sequential([
 ])
 
 # Compile the model
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=50, validation_split=0.2, verbose=0)
+history = model.fit(X_train, y_train, epochs=1000, validation_split=0.2, verbose=0)
 
 # Predict on the test set
 y_pred = model.predict(X_test)
 y_pred = (y_pred > 0.5).astype(int)
+
+print(f'loss: {history.history["loss"][-1]}')
+loss=history.history['loss']
+plt.plot(loss)
 
 # Evaluate the model
 print('Accuracy:', accuracy_score(y_test, y_pred))
