@@ -38,3 +38,17 @@ y_pred = (y_pred > 0.5).astype(int)
 # Evaluate the model
 print('Accuracy:', accuracy_score(y_test, y_pred))
 print('Confusion Matrix:\n', confusion_matrix(y_test, y_pred))
+
+# Example features
+example_features = [1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0]
+
+# Reshape example features into a 2D numpy array
+example_features_array = np.array(example_features).reshape(1, -1)
+
+# Predict the class (malicious or not) of the example URL
+prediction = model.predict(example_features_array)
+
+if prediction > 0.5:
+    print("The example URL is predicted to be malicious.")
+else:
+    print("The example URL is predicted to be non-malicious.")
