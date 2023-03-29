@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
-from tensorflow.keras import regularizers
+from sklearn.metrics import mean_squared_error as mse
 
 
 def plot_confusion_matrix(y_true, y_pred):
@@ -55,16 +55,16 @@ y = df.iloc[:, -1]  # the last column --> result
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 
 # Build the neural network model
-# model = tf.keras.Sequential([
-#  tf.keras.layers.Dense(32, activation='relu', input_shape=(X_train.shape[1],)),
-#  tf.keras.layers.Dense(16, activation='relu'),
-#  tf.keras.layers.Dense(1, activation='sigmoid')
-# ])
+model = tf.Sequential([
+ tf.layers.Dense(32, activation='relu', input_shape=(X_train.shape[1],)),
+ tf.layers.Dense(16, activation='tanh'),
+ tf.layers.Dense(1)
+])
 
 # Build the neural network model
-model = tf.models.Sequential()
-model.add(tf.layers.Dense(units=30, activation='relu'))  # input - 30 attributes
-model.add(tf.layers.Dense(units=1, activation='tanh'))  # output - 1 attribute
+# model = tf.models.Sequential()
+# model.add(tf.layers.Dense(units=30, activation='relu'))  # input - 30 attributes
+# model.add(tf.layers.Dense(units=1, activation='tanh'))  # output - 1 attribute
 
 # Build the neural network model
 # model = tf.Sequential([
@@ -76,11 +76,11 @@ model.add(tf.layers.Dense(units=1, activation='tanh'))  # output - 1 attribute
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=1000, validation_split=0.2, verbose=0)
+history = model.fit(X_train, y_train, epochs=100, validation_split=0.2, verbose=0)
 
 # Predict on the test set
-y_pred = model.predict(X_test)
-y_pred = (y_pred > 0.5).astype(int)
+y_pred = np.round(model.predict(X_test))
+# y_pred = (y_pred > 0.5).astype(int)
 
 print("=" * 32)
 print(f'Loss: {history.history["loss"][-1]}')
@@ -89,7 +89,7 @@ plt.plot(loss)
 
 # Evaluate the model
 print("=" * 32)
-print('Accuracy:', accuracy_score(y_test, y_pred))
+print('mse:', mse(y_test, y_pred))
 print("=" * 32)
 print('Confusion Matrix:\n', confusion_matrix(y_test, y_pred))
 print("=" * 32)
