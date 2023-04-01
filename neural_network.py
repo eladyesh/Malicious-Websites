@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, mean_squared_error as mse
 from Data import CollectData
 
-URL = 'https://www.valimail.com'
+URL = 'https://www.amazon.com/'
 
 urls = [
     "https://www.nike.com",
