@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -7,7 +9,20 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, mean_squared_error as mse
 from Data import CollectData
 
-URL = 'https://web.whatsapp.com/'
+URL = 'https://www.valimail.com'
+
+urls = [
+    "https://www.nike.com",
+    "https://www.hulu.com",
+    "https://www.wikipedia.org",
+    "https://www.airbnb.com",
+    "https://www.spotify.com",
+    "https://www.khanacademy.org",
+    "https://www.codecademy.com",
+    "https://www.dropbox.com",
+    "https://www.udemy.com",
+    "https://www.salesforce.com",
+]
 
 
 def plot_confusion_matrix(cm):
@@ -65,9 +80,10 @@ model.add(tf.layers.Dense(units=2, activation='softmax'))  # output - 1 attribut
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(x_train, y_train, epochs=100, validation_split=0.2, verbose=0)
+history = model.fit(x_train, y_train, epochs=500, validation_split=0.2, verbose=0)
 
 example_features = CollectData()[URL]
+# example_features = [random.randint(-1, 1) for i in range(21)]
 if example_features is None:
     quit(print('DATA EXTRACTION FAILED'))
 
@@ -89,10 +105,6 @@ loss = history.history['loss']
 # MSE
 print('MSE:', mse(y_test, y_pred))
 
-# Plot
-plt.plot(loss)
-plot_confusion_matrix(cm)
-
 # Predict the class (malicious or not) of the example URL
 prediction = model.predict(example_features_array)
 prediction = np.dot(prediction, state)[0]
@@ -105,3 +117,7 @@ if prediction > 0.5:
 else:
     print("The Features List: ", example_features)
     print("The example URL is predicted to be non-malicious.")
+
+# Plot
+plt.plot(loss)
+plot_confusion_matrix(cm)
