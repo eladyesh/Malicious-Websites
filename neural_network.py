@@ -111,12 +111,10 @@ prediction = np.dot(prediction, state)[0]
 print(f"Prediction: {prediction}")
 if prediction > 0.5:
     print("The Features List: ", example_features)
-    # example phishing --> [-1, 0, 1, -1, 0, -1, 0, 0, 0, 1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, 1, 0, 0, 0, 1, -1,
-    # 1, 0, 1]
-    print("The example URL is predicted to be malicious.")
+    print("The example URL is predicted to be non-malicious.")
 else:
     print("The Features List: ", example_features)
-    print("The example URL is predicted to be non-malicious.")
+    print("The example URL is predicted to be malicious.")
 
 # Plot
 plt.plot(loss)
