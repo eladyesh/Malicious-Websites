@@ -1,5 +1,4 @@
 import random
-
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -9,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, mean_squared_error as mse
 from Data import CollectData
 
-URL = 'https://www.amazon.com/'
+URL = 'https://www.nike.com'
 
 urls = [
     "https://www.nike.com",
@@ -73,8 +72,8 @@ y_new = np.array([y1, y2]).T
 x_train, x_test, y_train, y_test = train_test_split(x, y_new, test_size=0.2, random_state=1)
 
 model = tf.models.Sequential()
-model.add(tf.layers.Dense(units=2, activation='sigmoid'))  # output - 1 attribute
-model.add(tf.layers.Dense(units=2, activation='softmax'))  # output - 1 attribute
+model.add(tf.layers.Dense(units=2, activation='sigmoid'))  # output - 2 attribute
+model.add(tf.layers.Dense(units=2, activation='softmax'))  # output - 2 attribute
 
 # Compile the model
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
@@ -83,7 +82,6 @@ model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 history = model.fit(x_train, y_train, epochs=500, validation_split=0.2, verbose=0)
 
 example_features = CollectData()[URL]
-# example_features = [random.randint(-1, 1) for i in range(21)]
 if example_features is None:
     quit(print('DATA EXTRACTION FAILED'))
 
