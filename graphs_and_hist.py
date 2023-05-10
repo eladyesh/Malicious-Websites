@@ -18,3 +18,15 @@ for col in df.columns[:-1]:
     plt.xlabel(col)
     plt.ylabel("Result")
     plt.show()
+    
+# Plot a histogram of the "Result" column
+plt.hist(df["Result"])
+plt.xlabel("Result")
+plt.ylabel("Frequency")
+plt.show()
+
+# Plot a histogram of the "URL_Length" column
+plt.hist(df["URL_Length"])
+plt.xlabel("URL_Length")
+plt.ylabel("Frequency")
+plt.show()
