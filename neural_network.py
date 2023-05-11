@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, mean_squared_error as mse
 from Data import CollectData
 
-URL = 'https://www.nike.com'
+URL = 'www.3d-printing.store'
 
 urls = [
     "https://www.nike.com",
