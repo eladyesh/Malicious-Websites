@@ -15,9 +15,15 @@ This project is a neural network implementation in Python to detect malicious we
 
 1. Clone the repository: `git clone https://github.com/eladyesh/Malicious-Websites.git`
 2. Install the required packages using pip: `pip install -r requirements.txt`
-3. Enter a URL to analyze in neural_network.py
-4. Run the program: `python neural_network.py`
-5. The program will output whether the website is malicious or not
+
+#### A single URL
+run the program like the following:
+`python network.py [-h] url` where url is the parameter
+
+#### Multiple URL's
+run the program like the following:
+`python multiple_domains.py [-h] domains.txt` where domains.txt is the parameter
+an output file with the analysis of each url will be presented.
 
 ## How it Works
 
