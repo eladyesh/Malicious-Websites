@@ -1,5 +1,6 @@
 import random
 import threading
+import argparse
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -11,14 +12,23 @@ from Data import CollectData
 import requests
 import concurrent.futures
 
-URL = "http://www.4turka.com/index.php"
+# URL = "http://www.4turka.com/index.php"
 
-urls = ["https://www.google.com", "https://www.amazon.com", "https://www.youtube.com", "https://www.facebook.com",
-        "https://www.twitter.com"]
+# urls = ["https://www.google.com", "https://www.amazon.com", "https://www.youtube.com", "https://www.facebook.com",
+#         "https://www.twitter.com"]
 
-urls = open("domains.txt", "r").read().split("\n")
-print(urls)
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description='Network Analysis')
+parser.add_argument('input_file', type=str, help='Path to the input file')
+args = parser.parse_args()
 
+# Read URLs from the input file
+with open(args.input_file, 'r') as file:
+    urls = file.read().split("\n")
+
+# Create an output file
+output_file = "network_output.txt"
+with open(output_file, "w") as f: f.write("")
 
 def plot_confusion_matrix(cm):
     """
@@ -128,7 +138,10 @@ def worker(url, lock):
                 output += "\n"
 
         finally:
-            return output
+            # return output
+            with open(output_file, 'a') as file:
+                file.write(output)
+                file.write("\n---\n")
 
 
 # Create a ThreadPoolExecutor object with the desired number of threads
@@ -138,10 +151,13 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
     futures = [executor.submit(worker, url, lock_dict[url]) for url in urls]
 
     # Retrieve the results of each task
-    for future in concurrent.futures.as_completed(futures):
-        result = future.result()
-        if result:
-            print(result)
+    # for future in concurrent.futures.as_completed(futures):
+    #     result = future.result()
+    #     if result:
+    #         print(result)
+
+    # Wait for all tasks to complete
+    # concurrent.futures.wait(futures)
 
 # Plot
 # plt.plot(loss)
