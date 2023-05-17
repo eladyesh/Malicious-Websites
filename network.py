@@ -1,4 +1,5 @@
 import random
+import argparse
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -8,21 +9,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, mean_squared_error as mse
 from Data import CollectData
 
-URL = 'www.3d-printing.store'
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description='URL Classification')
+parser.add_argument('url', type=str, help='URL to classify')
+args = parser.parse_args()
 
-urls = [
-    "https://www.nike.com",
-    "https://www.hulu.com",
-    "https://www.wikipedia.org",
-    "https://www.airbnb.com",
-    "https://www.spotify.com",
-    "https://www.khanacademy.org",
-    "https://www.codecademy.com",
-    "https://www.dropbox.com",
-    "https://www.udemy.com",
-    "https://www.salesforce.com",
-]
+URL = args.url # URL = 'www.3d-printing.store'
 
+if not URL:
+    print('URL not provided. Exiting...')
+    exit()
 
 def plot_confusion_matrix(cm):
     """
@@ -79,7 +75,7 @@ model.add(tf.layers.Dense(units=2, activation='softmax'))  # output - 2 attribut
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(x_train, y_train, epochs=500, validation_split=0.2, verbose=0)
+history = model.fit(x_train, y_train, epochs=1000, validation_split=0.2, verbose=0)
 
 example_features = CollectData()[URL]
 if example_features is None:
